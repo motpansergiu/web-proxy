@@ -1,14 +1,9 @@
 package dvl.srg.repository;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
 import dvl.srg.configuration.CassandraConnector;
+import dvl.srg.configuration.KeyspaceManager;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
@@ -19,13 +14,18 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Session;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class KeyspaceRepositoryIntegrationTest {
 
-    private KeyspaceRepository schemaRepository;
+    private KeyspaceManager schemaRepository;
 
     private Session session;
 
@@ -37,18 +37,16 @@ public class KeyspaceRepositoryIntegrationTest {
 
     @Before
     public void connect() {
-        CassandraConnector client = new CassandraConnector();
+        final CassandraConnector client = new CassandraConnector();
         client.connect("127.0.0.1", 9142);
         this.session = client.getSession();
-        schemaRepository = new KeyspaceRepository(session);
+        schemaRepository = new KeyspaceManager(session);
     }
 
     @Test
-    public void whenCreatingAKeyspace_thenCreated() {
-        String keyspaceName = "testBaeldungKeyspace";
+    public void whenCreatingAKeyspaceThenCreated() {
+        final String keyspaceName = "testKeyspace";
         schemaRepository.createKeyspace(keyspaceName, "SimpleStrategy", 1);
-
-        // ResultSet result = session.execute("SELECT * FROM system_schema.keyspaces WHERE keyspace_name = 'testBaeldungKeyspace';");
 
         ResultSet result = session.execute("SELECT * FROM system_schema.keyspaces;");
 
@@ -59,14 +57,16 @@ public class KeyspaceRepositoryIntegrationTest {
     }
 
     @Test
-    public void whenDeletingAKeyspace_thenDoesNotExist() {
-        String keyspaceName = "testBaeldungKeyspace";
+    public void whenDeletingAKeyspaceThenDoesNotExist() {
+        final String keyspaceName = "testKeyspace";
 
         // schemaRepository.createKeyspace(keyspaceName, "SimpleStrategy", 1);
         schemaRepository.deleteKeyspace(keyspaceName);
 
-        ResultSet result = session.execute("SELECT * FROM system_schema.keyspaces;");
-        boolean isKeyspaceCreated = result.all().stream().anyMatch(r -> r.getString(0).equals(keyspaceName.toLowerCase()));
+        final ResultSet result = session.execute("SELECT * FROM system_schema.keyspaces;");
+        final boolean isKeyspaceCreated = result.all()
+                .stream()
+                .anyMatch(r -> r.getString(0).equals(keyspaceName.toLowerCase()));
         assertFalse(isKeyspaceCreated);
     }
 

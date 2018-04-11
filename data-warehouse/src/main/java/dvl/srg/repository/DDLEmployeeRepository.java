@@ -2,32 +2,26 @@ package dvl.srg.repository;
 
 import com.datastax.driver.core.Session;
 
-import java.util.List;
+public final class DDLEmployeeRepository {
 
-import static java.util.Objects.requireNonNull;
-
-public final class DDLRepositoryManager {
+    private static final String TABLE_NAME = "employee";
 
     private final Session session;
 
-    public DDLRepositoryManager(Session session) {
+    public DDLEmployeeRepository(Session session) {
         this.session = session;
     }
 
-    public void createTable(final String tableName, final String primaryKey, final List<String> columns) {
-        requireNonNull(tableName);
-        requireNonNull(primaryKey);
-        requireNonNull(columns);
-
+    public void createTable() {
         final StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
-                .append(tableName)
-                .append("(");
-        columns.forEach(column -> sb.append(column).append(","));
+                .append(TABLE_NAME)
+                .append("(id uuid PRIMARY KEY, ")
+                .append("name text,")
+                .append("address text);");
+        session.execute(sb.toString());
+    }
 
-        sb.append(primaryKey)
-                .append(");");
-
-        final String query = sb.toString();
-        session.execute(query);
+    public void deleteTable() {
+        session.execute("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 }
