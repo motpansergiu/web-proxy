@@ -1,4 +1,4 @@
-package dvl.srg.repository;
+package dvl.srg.configuration;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class KeyspaceRepositoryIntegrationTest {
+public class KeyspaceManagerIntegrationTest {
 
     private KeyspaceManager schemaRepository;
 
