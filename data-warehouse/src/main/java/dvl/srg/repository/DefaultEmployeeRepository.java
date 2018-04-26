@@ -6,7 +6,7 @@ import dvl.srg.domain.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultEmployeeRepository implements EmployeeRepository {
+public final class DefaultEmployeeRepository implements EmployeeRepository {
 
     private static final String TABLE_NAME = "employee";
 

@@ -14,6 +14,8 @@ public final class PropertyFileLoader {
     private static final String CASSANDRA_NUMBEROFREPLICAS = "cassandra.numberofreplicas";
     private static final String CASSANDRA_KEYSPACE_NAME = "cassandra.keyspace.name";
 
+    private static final String APPLICATION_SERVER_PORT = "server.port";
+
     private PropertyFileLoader() {
     }
 
@@ -27,5 +29,14 @@ public final class PropertyFileLoader {
         final String numberOfReplicas = appProps.getProperty(CASSANDRA_NUMBEROFREPLICAS);
         final String keyspace = appProps.getProperty(CASSANDRA_KEYSPACE_NAME);
         return new CassandraProperties(host, Integer.valueOf(port), replicationSrategy, Integer.valueOf(numberOfReplicas), keyspace);
+    }
+
+    public static ApplicationProperties loadApplicationProperties(final String fileURL) throws IOException {
+        final Properties appProps = new Properties();
+        appProps.load(new FileInputStream(requireNonNull(fileURL)));
+
+        final String serverPort = appProps.getProperty(APPLICATION_SERVER_PORT);
+
+        return new ApplicationProperties(Integer.valueOf(serverPort));
     }
 }

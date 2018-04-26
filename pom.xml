@@ -54,13 +54,6 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <mainClass>dvl.srg.main.App</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

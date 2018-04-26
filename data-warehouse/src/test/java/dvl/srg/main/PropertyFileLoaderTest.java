@@ -23,6 +23,17 @@ public class PropertyFileLoaderTest {
 
     }
 
+    @Test
+    public void whenLoadPropetiesFileThenApplicationPropertiesIsCreated() throws IOException {
+        final String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        final String appConfigPath = rootPath + "application.properties";
+
+        ApplicationProperties applicationProperties = PropertyFileLoader.loadApplicationProperties(appConfigPath);
+
+        assertNotNull(applicationProperties);
+        assertEquals(9991, applicationProperties.getServerPort());
+    }
+
     @Test(expected = NullPointerException.class)
     public void whenLoadPropetiesFileAndFilePathNullThenThrowsNullPointerException() throws IOException {
         CassandraProperties cassandraProperties = PropertyFileLoader.loadCassandraProperties(null);
