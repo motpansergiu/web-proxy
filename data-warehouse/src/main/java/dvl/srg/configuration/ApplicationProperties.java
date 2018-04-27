@@ -1,4 +1,4 @@
-package dvl.srg.main;
+package dvl.srg.configuration;
 
 import lombok.Value;
 

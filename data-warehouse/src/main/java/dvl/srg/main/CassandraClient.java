@@ -27,20 +27,20 @@ public class CassandraClient {
         sr.createKeyspace("employeeKeySpace", "SimpleStrategy", 1);
         sr.useKeyspace("employeeKeySpace");
 
-        DDLEmployeeRepository ddlEmployeeRepository = new DDLEmployeeRepository(session);
+//        DDLEmployeeRepository ddlEmployeeRepository = new DDLEmployeeRepository(session);
         EmployeeRepository employeeRepository = new DefaultEmployeeRepository(session);
 
-        ddlEmployeeRepository.createTable();
+        //ddlEmployeeRepository.createTable();
 
-        employeeRepository.insertEmployee(Employee.of(UUIDs.timeBased(), "Sergiu Motpan", "Chisinau"));
+//        employeeRepository.insertEmployee(Employee.of(UUIDs.timeBased(), "Sergiu Motpan", "Chisinau"));
 
-        employeeRepository.insertEmployeeBatch(getDefaultEmployeesList());
+//        employeeRepository.insertEmployeeBatch(getDefaultEmployeesList());
 
         employeeRepository.findAll().forEach(employee -> System.out.println("Employee in list: " + employee));
 
-        ddlEmployeeRepository.deleteTable();
+       // ddlEmployeeRepository.deleteTable();
 
-        sr.deleteKeyspace("employeeKeySpace");
+       // sr.deleteKeyspace("employeeKeySpace");
 
         connector.close();
     }
