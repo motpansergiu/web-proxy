@@ -1,6 +1,5 @@
 package dvl.srg.web.reactor.eventhandler;
 
-import dvl.srg.web.reactor.datahandler.DataHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,18 +8,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.function.Consumer;
 
-public class ReadEventHandler implements EventHandler {
+public final class ReadEventHandler implements EventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ReadEventHandler.class);
 
     private Selector demultiplexer;
-    private DataHandler dataHandler;
+    private Consumer<byte[]> requestDataHandler;
     private ByteBuffer inputBuffer = ByteBuffer.allocate(2048);
 
-    public ReadEventHandler(final Selector demultiplexer, final DataHandler dataHandler) {
+    public ReadEventHandler(final Selector demultiplexer, final Consumer<byte[]> requestDataHandler) {
         this.demultiplexer = demultiplexer;
-        this.dataHandler = dataHandler;
+        this.requestDataHandler = requestDataHandler;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ReadEventHandler implements EventHandler {
         byte[] buffer = new byte[inputBuffer.limit()];
         inputBuffer.get(buffer);
 
-        dataHandler.handle(buffer);
+        requestDataHandler.accept(buffer);
 
         inputBuffer.flip();
     }

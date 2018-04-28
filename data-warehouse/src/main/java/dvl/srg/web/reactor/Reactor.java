@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.util.Objects.requireNonNull;
 
-public class Reactor {
+public final class Reactor {
 
     private static final Logger logger = LoggerFactory.getLogger(Reactor.class);
 

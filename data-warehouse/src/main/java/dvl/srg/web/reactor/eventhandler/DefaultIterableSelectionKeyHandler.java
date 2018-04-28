@@ -9,7 +9,7 @@ import java.nio.channels.SelectionKey;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class DefaultIterableSelectionKeyHandler implements IterableEventHandler {
+public final class DefaultIterableSelectionKeyHandler implements IterableEventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultIterableSelectionKeyHandler.class);
 

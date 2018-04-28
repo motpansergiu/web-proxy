@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultEventRegistry implements EventRegistry {
+public final class DefaultEventRegistry implements EventRegistry {
 
     private final Map<Integer, EventHandler> registeredHandlers;
 

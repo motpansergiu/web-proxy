@@ -1,18 +1,14 @@
 package dvl.srg.repository;
 
 import com.datastax.driver.core.Session;
+import dvl.srg.cassandra.DDLRepository;
 
-public final class DDLEmployeeRepository {
+public final class DDLEmployeeRepository implements DDLRepository {
 
     private static final String TABLE_NAME = "employee";
 
-    private final Session session;
-
-    public DDLEmployeeRepository(Session session) {
-        this.session = session;
-    }
-
-    public void createTable() {
+    @Override
+    public void createTable(final Session session) {
         final StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(TABLE_NAME)
                 .append("(id uuid PRIMARY KEY, ")
@@ -21,7 +17,8 @@ public final class DDLEmployeeRepository {
         session.execute(sb.toString());
     }
 
-    public void deleteTable() {
+    @Override
+    public void deleteTable(final Session session) {
         session.execute("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 }

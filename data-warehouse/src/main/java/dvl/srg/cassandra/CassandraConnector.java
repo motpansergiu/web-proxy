@@ -1,4 +1,4 @@
-package dvl.srg.configuration;
+package dvl.srg.cassandra;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;

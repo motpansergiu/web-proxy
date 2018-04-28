@@ -79,7 +79,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>dvl.srg.main.CassandraClient</mainClass>
+                                    <mainClass>dvl.srg.App</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

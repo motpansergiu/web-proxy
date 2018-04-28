@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
-public class WriteEventHandler implements EventHandler {
+public final class WriteEventHandler implements EventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(WriteEventHandler.class);
 

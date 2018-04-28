@@ -4,7 +4,7 @@ import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.utils.UUIDs;
-import dvl.srg.configuration.CassandraConnector;
+import dvl.srg.cassandra.CassandraConnector;
 import dvl.srg.configuration.KeyspaceManager;
 import dvl.srg.domain.model.Employee;
 import org.apache.cassandra.exceptions.ConfigurationException;
@@ -53,13 +53,13 @@ public class DefaultEmployeeRepositoryIntegrationTest {
         schemaRepository.createKeyspace(KEYSPACE_NAME, "SimpleStrategy", 1);
         schemaRepository.useKeyspace(KEYSPACE_NAME);
         employeeRepository = new DefaultEmployeeRepository(session);
-        ddlEmployeeRepository = new DDLEmployeeRepository(session);
+        ddlEmployeeRepository = new DDLEmployeeRepository();
     }
 
     @Test
     public void whenCreatingATableThenCreatedCorrectly() {
-        ddlEmployeeRepository.deleteTable();
-        ddlEmployeeRepository.createTable();
+        ddlEmployeeRepository.deleteTable(session);
+        ddlEmployeeRepository.createTable(session);
 
         final ResultSet result = session.execute("SELECT * FROM " + KEYSPACE_NAME + "." + EMPLOYEE + ";");
 
@@ -78,8 +78,8 @@ public class DefaultEmployeeRepositoryIntegrationTest {
 
     @Test
     public void whenAddingANewEmployeeThenEmployeeExists() {
-        ddlEmployeeRepository.deleteTable();
-        ddlEmployeeRepository.createTable();
+        ddlEmployeeRepository.deleteTable(session);
+        ddlEmployeeRepository.createTable(session);
 
         final String name = "Kapushon";
         final String address = "Leuseni";
@@ -93,8 +93,8 @@ public class DefaultEmployeeRepositoryIntegrationTest {
 
     @Test
     public void whenAddingANewEmployeeBatchThenEmployeesExist() {
-        ddlEmployeeRepository.deleteTable();
-        ddlEmployeeRepository.createTable();
+        ddlEmployeeRepository.deleteTable(session);
+        ddlEmployeeRepository.createTable(session);
 
         final String name = "Kapushon";
         final String address = "Leuseni";

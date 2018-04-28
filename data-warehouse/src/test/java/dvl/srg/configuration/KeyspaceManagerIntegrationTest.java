@@ -2,8 +2,7 @@ package dvl.srg.configuration;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
-import dvl.srg.configuration.CassandraConnector;
-import dvl.srg.configuration.KeyspaceManager;
+import dvl.srg.cassandra.CassandraConnector;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
