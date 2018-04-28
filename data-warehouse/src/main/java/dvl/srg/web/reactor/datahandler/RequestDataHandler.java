@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
-public class RequestDataHandler implements Consumer<byte[]> {
+public final class RequestDataHandler implements Consumer<byte[]> {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestDataHandler.class);
 

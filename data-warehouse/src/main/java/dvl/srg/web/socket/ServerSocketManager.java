@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 
-public class ServerSocketManager {
+public final class ServerSocketManager {
 
     private final ApplicationProperties applicationProperties;
 

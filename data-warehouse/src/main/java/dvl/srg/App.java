@@ -5,8 +5,11 @@ import dvl.srg.cassandra.CassandraConnectorManager;
 import dvl.srg.configuration.ApplicationProperties;
 import dvl.srg.configuration.CassandraProperties;
 import dvl.srg.configuration.PropertyFileLoader;
+import dvl.srg.repository.DefaultEmployeeRepository;
 import dvl.srg.web.reactor.Reactor;
 import dvl.srg.web.reactor.ReactorManager;
+import dvl.srg.web.reactor.eventregistry.DefaultEventRegistryFactory;
+import dvl.srg.web.reactor.eventregistry.EventRegistryFactory;
 import dvl.srg.web.socket.ServerSocketManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,10 +45,16 @@ public final class App {
 
             try {
                 final ServerSocketManager socketManager = new ServerSocketManager(applicationProperties);
-                final ReactorManager reactorManager = new ReactorManager(connectorManager.getSession(),
-                        socketManager.start(), new Reactor(new AtomicBoolean(true)));
+
+                final Reactor reactor = new Reactor(new AtomicBoolean(true));
+
+                final EventRegistryFactory eventRegistryFactory =
+                        new DefaultEventRegistryFactory(new DefaultEmployeeRepository(connectorManager.getSession()), reactor.getDemultiplexer());
+
+                final ReactorManager reactorManager = new ReactorManager(eventRegistryFactory.newEventRegistry(), socketManager.start(), reactor);
 
                 reactorManager.run();
+
             } catch (final IOException e) {
                 logger.error("Cannot start reactor!", e);
                 System.exit(-1);
