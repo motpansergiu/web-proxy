@@ -7,12 +7,11 @@ import dvl.srg.configuration.CassandraProperties;
 import dvl.srg.configuration.PropertyFileLoader;
 import dvl.srg.web.reactor.Reactor;
 import dvl.srg.web.reactor.ReactorManager;
+import dvl.srg.web.socket.ServerSocketManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.ServerSocketChannel;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class App {
@@ -24,7 +23,6 @@ public final class App {
     private static final String CASSANDRA_PROPERTIES = "cassandra.properties";
 
     public static void main(String[] args) {
-
         ApplicationProperties applicationProperties = null;
         CassandraProperties cassandraProperties = null;
         try {
@@ -40,10 +38,11 @@ public final class App {
         final CassandraConnectorManager connectorManager = new CassandraConnectorManager(new CassandraConnector(), cassandraProperties);
         connectorManager.setUpCassandraKeyspace();
 
-        final Reactor reactor;
         try {
-            reactor = new Reactor(new AtomicBoolean(true));
-            final ReactorManager reactorManager = new ReactorManager(connectorManager.getSession(), setUpAndGetServerSocketChannel(applicationProperties), reactor);
+            final ServerSocketManager socketManager = new ServerSocketManager(applicationProperties);
+            final ReactorManager reactorManager = new ReactorManager(connectorManager.getSession(),
+                    socketManager.start(), new Reactor(new AtomicBoolean(true)));
+
             reactorManager.run();
         } catch (final IOException e) {
             logger.error("Cannot start reactor!", e);
@@ -51,19 +50,5 @@ public final class App {
         }
 
         connectorManager.close();
-    }
-
-    private static ServerSocketChannel setUpAndGetServerSocketChannel(final ApplicationProperties applicationProperties) {
-        ServerSocketChannel server = null;
-        try {
-            server = ServerSocketChannel.open();
-            server.socket().bind(new InetSocketAddress(applicationProperties.getServerPort()));
-            server.configureBlocking(false);
-
-        } catch (IOException e) {
-            logger.error("Cannot start server on port !" + applicationProperties.getServerPort(), e);
-            System.exit(-1);
-        }
-        return server;
     }
 }
