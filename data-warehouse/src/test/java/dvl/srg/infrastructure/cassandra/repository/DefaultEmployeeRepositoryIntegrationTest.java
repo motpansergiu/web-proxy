@@ -1,12 +1,13 @@
-package dvl.srg.repository;
+package dvl.srg.infrastructure.cassandra.repository;
 
 import com.datastax.driver.core.ColumnDefinitions;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.utils.UUIDs;
-import dvl.srg.cassandra.CassandraConnector;
-import dvl.srg.configuration.KeyspaceManager;
+import dvl.srg.infrastructure.cassandra.connector.CassandraConnector;
+import dvl.srg.infrastructure.cassandra.keyspace.KeyspaceManager;
 import dvl.srg.domain.model.Employee;
+import dvl.srg.domain.model.EmployeeRepository;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
@@ -33,7 +34,7 @@ public class DefaultEmployeeRepositoryIntegrationTest {
 
     private EmployeeRepository employeeRepository;
 
-    private DDLEmployeeRepository ddlEmployeeRepository;
+    private DDLEmployeeCassandra ddlEmployeeRepository;
 
     private Session session;
 
@@ -53,7 +54,7 @@ public class DefaultEmployeeRepositoryIntegrationTest {
         schemaRepository.createKeyspace(KEYSPACE_NAME, "SimpleStrategy", 1);
         schemaRepository.useKeyspace(KEYSPACE_NAME);
         employeeRepository = new DefaultEmployeeRepository(session);
-        ddlEmployeeRepository = new DDLEmployeeRepository();
+        ddlEmployeeRepository = new DDLEmployeeCassandra();
     }
 
     @Test

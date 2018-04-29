@@ -1,8 +1,9 @@
-package dvl.srg.configuration;
+package dvl.srg.infrastructure.configuration;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
-import dvl.srg.cassandra.CassandraConnector;
+import dvl.srg.infrastructure.cassandra.connector.CassandraConnector;
+import dvl.srg.infrastructure.cassandra.keyspace.KeyspaceManager;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.thrift.transport.TTransportException;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;

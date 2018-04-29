@@ -1,6 +1,6 @@
 package dvl.srg.web.reactor.eventregistry;
 
-import dvl.srg.repository.EmployeeRepository;
+import dvl.srg.domain.model.EmployeeRepository;
 import dvl.srg.web.reactor.datahandler.RequestDataHandler;
 import dvl.srg.web.reactor.eventhandler.AcceptEventHandler;
 import dvl.srg.web.reactor.eventhandler.ReadEventHandler;

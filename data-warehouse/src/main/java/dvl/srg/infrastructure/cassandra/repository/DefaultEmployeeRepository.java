@@ -1,7 +1,8 @@
-package dvl.srg.repository;
+package dvl.srg.infrastructure.cassandra.repository;
 
 import com.datastax.driver.core.Session;
 import dvl.srg.domain.model.Employee;
+import dvl.srg.domain.model.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;

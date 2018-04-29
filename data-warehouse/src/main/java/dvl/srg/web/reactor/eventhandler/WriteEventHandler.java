@@ -1,6 +1,6 @@
 package dvl.srg.web.reactor.eventhandler;
 
-import dvl.srg.repository.EmployeeRepository;
+import dvl.srg.domain.model.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

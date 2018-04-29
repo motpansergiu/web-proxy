@@ -1,8 +1,8 @@
-package dvl.srg.cassandra;
+package dvl.srg.infrastructure.cassandra.connector;
 
 import com.datastax.driver.core.Session;
 
-public interface DDLRepository {
+public interface DDLCassandra {
 
     void createTable(Session session);
 

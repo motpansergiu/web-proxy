@@ -1,9 +1,9 @@
-package dvl.srg.repository;
+package dvl.srg.infrastructure.cassandra.repository;
 
 import com.datastax.driver.core.Session;
-import dvl.srg.cassandra.DDLRepository;
+import dvl.srg.infrastructure.cassandra.connector.DDLCassandra;
 
-public final class DDLEmployeeRepository implements DDLRepository {
+public final class DDLEmployeeCassandra implements DDLCassandra {
 
     private static final String TABLE_NAME = "employee";
 

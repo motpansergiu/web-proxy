@@ -1,6 +1,6 @@
 package dvl.srg.web.socket;
 
-import dvl.srg.configuration.ApplicationProperties;
+import dvl.srg.infrastructure.configuration.ApplicationProperties;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

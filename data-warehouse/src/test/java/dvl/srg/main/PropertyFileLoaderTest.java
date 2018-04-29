@@ -1,8 +1,8 @@
 package dvl.srg.main;
 
-import dvl.srg.configuration.ApplicationProperties;
-import dvl.srg.configuration.CassandraProperties;
-import dvl.srg.configuration.PropertyFileLoader;
+import dvl.srg.infrastructure.configuration.ApplicationProperties;
+import dvl.srg.infrastructure.configuration.CassandraProperties;
+import dvl.srg.infrastructure.configuration.PropertyFileLoader;
 import org.junit.Test;
 
 import java.io.IOException;

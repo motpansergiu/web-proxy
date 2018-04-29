@@ -1,6 +1,4 @@
-package dvl.srg.repository;
-
-import dvl.srg.domain.model.Employee;
+package dvl.srg.domain.model;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package dvl.srg.cassandra;
+package dvl.srg.infrastructure.cassandra.connector;
 
 import com.datastax.driver.core.Session;
-import dvl.srg.configuration.CassandraProperties;
-import dvl.srg.configuration.KeyspaceManager;
+import dvl.srg.infrastructure.configuration.CassandraProperties;
+import dvl.srg.infrastructure.cassandra.keyspace.KeyspaceManager;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public final class CassandraConnectorManager {
         keyspaceManager.useKeyspace(cassandraProperties.getKeyspaceName());
     }
 
-    private void initStorage(final List<DDLRepository> tables) {
+    private void initStorage(final List<DDLCassandra> tables) {
         final Session session = getSession();
         tables.forEach(table -> table.createTable(session));
     }

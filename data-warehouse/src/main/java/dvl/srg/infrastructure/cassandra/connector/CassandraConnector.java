@@ -1,4 +1,4 @@
-package dvl.srg.cassandra;
+package dvl.srg.infrastructure.cassandra.connector;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;

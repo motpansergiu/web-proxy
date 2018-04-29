@@ -1,4 +1,4 @@
-package dvl.srg.configuration;
+package dvl.srg.infrastructure.configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package dvl.srg.configuration;
+package dvl.srg.infrastructure.cassandra.keyspace;
 
 import com.datastax.driver.core.Session;
 

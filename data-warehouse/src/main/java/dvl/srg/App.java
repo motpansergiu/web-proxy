@@ -1,13 +1,15 @@
 package dvl.srg;
 
-import dvl.srg.cassandra.CassandraConnector;
-import dvl.srg.cassandra.CassandraConnectorManager;
-import dvl.srg.configuration.ApplicationProperties;
-import dvl.srg.configuration.CassandraProperties;
-import dvl.srg.configuration.PropertyFileLoader;
-import dvl.srg.repository.DefaultEmployeeRepository;
+import dvl.srg.infrastructure.cassandra.connector.CassandraConnector;
+import dvl.srg.infrastructure.cassandra.connector.CassandraConnectorManager;
+import dvl.srg.infrastructure.cassandra.repository.DefaultEmployeeRepository;
+import dvl.srg.infrastructure.configuration.ApplicationProperties;
+import dvl.srg.infrastructure.configuration.CassandraProperties;
+import dvl.srg.infrastructure.configuration.PropertyFileLoader;
 import dvl.srg.web.reactor.Reactor;
 import dvl.srg.web.reactor.ReactorManager;
+import dvl.srg.web.reactor.eventhandler.DefaultIterableSelectionKeyHandler;
+import dvl.srg.web.reactor.eventhandler.IterableEventHandler;
 import dvl.srg.web.reactor.eventregistry.DefaultEventRegistryFactory;
 import dvl.srg.web.reactor.eventregistry.EventRegistryFactory;
 import dvl.srg.web.socket.ServerSocketManager;
@@ -51,7 +53,9 @@ public final class App {
                 final EventRegistryFactory eventRegistryFactory =
                         new DefaultEventRegistryFactory(new DefaultEmployeeRepository(connectorManager.getSession()), reactor.getDemultiplexer());
 
-                final ReactorManager reactorManager = new ReactorManager(eventRegistryFactory.newEventRegistry(), socketManager.start(), reactor);
+                final IterableEventHandler iterableEventHandler = new DefaultIterableSelectionKeyHandler(eventRegistryFactory.newEventRegistry());
+
+                final ReactorManager reactorManager = new ReactorManager(iterableEventHandler, socketManager.start(), reactor);
 
                 reactorManager.run();
 
