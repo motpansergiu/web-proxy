@@ -25,8 +25,8 @@ public final class ReadEventHandler implements EventHandler {
 
     @Override
     public void accept(final SelectionKey handle) throws IOException {
-
         final SocketChannel socketChannel = (SocketChannel) handle.channel();
+        logger.info("Handle read selection key " + handle.channel());
 
         readDataIntoBuffer(socketChannel);
 

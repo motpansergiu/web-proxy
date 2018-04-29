@@ -24,7 +24,7 @@ public final class DefaultIterableSelectionKeyHandler implements IterableEventHa
         while (selectionKeyIterator.hasNext()) {
 
             final SelectionKey selectionKey = selectionKeyIterator.next();
-            logger.info("Handle new selection key " + selectionKey);
+            logger.info("Handle new selection key " + selectionKey.channel());
 
             if (selectionKey.isAcceptable()) {
                 final Optional<EventHandler> eventHandler = eventRegistry.findEventHandler(SelectionKey.OP_ACCEPT);

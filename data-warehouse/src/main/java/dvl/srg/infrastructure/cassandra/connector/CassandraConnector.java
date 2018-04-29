@@ -10,14 +10,13 @@ import org.slf4j.LoggerFactory;
 
 public final class CassandraConnector {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CassandraConnector.class);
+    private static final Logger logger = LoggerFactory.getLogger(CassandraConnector.class);
 
     private Cluster cluster;
 
     private Session session;
 
     public void connect(final String node, final Integer port) {
-
         Builder b = Cluster.builder().addContactPoint(node);
 
         if (port != null) {
@@ -25,16 +24,14 @@ public final class CassandraConnector {
         }
 
         cluster = b.build();
-
         logHostData(cluster.getMetadata());
-
         session = cluster.connect();
     }
 
     private void logHostData(final Metadata metadata) {
-        LOG.info("Cluster name: " + metadata.getClusterName());
+        logger.info("Cluster name: " + metadata.getClusterName());
         for (Host host : metadata.getAllHosts()) {
-            LOG.info("Datacenter: " + host.getDatacenter() + " Host: " + host.getAddress() + " Rack: " + host.getRack());
+            logger.info("Datacenter: " + host.getDatacenter() + " Host: " + host.getAddress() + " Rack: " + host.getRack());
         }
     }
 

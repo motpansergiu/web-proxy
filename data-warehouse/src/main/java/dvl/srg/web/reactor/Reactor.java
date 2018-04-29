@@ -39,7 +39,9 @@ public final class Reactor {
     public void run() {
         try {
             while (isRunning.get()) {
+                logger.info("Waiting for selection keys...");
                 demultiplexer.select();
+                logger.info("Process existing selected keys");
                 final Set<SelectionKey> readyHandles = demultiplexer.selectedKeys();
                 iterableEventHandler.accept(readyHandles.iterator());
             }

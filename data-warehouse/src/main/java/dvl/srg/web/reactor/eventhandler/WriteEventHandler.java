@@ -23,6 +23,7 @@ public final class WriteEventHandler implements EventHandler {
 
     @Override
     public void accept(final SelectionKey handle) throws IOException {
+        logger.info("Handle write selection key " + handle.channel());
         SocketChannel socketChannel = (SocketChannel) handle.channel();
 //        ByteBuffer inputBuffer = (ByteBuffer) handle.attachment();
 
@@ -33,6 +34,7 @@ public final class WriteEventHandler implements EventHandler {
         inputBuffer.put(sb.toString().getBytes());
         inputBuffer.flip();
 
+        logger.info("Write data into socket channel ");
         socketChannel.write(inputBuffer);
         socketChannel.close();
     }

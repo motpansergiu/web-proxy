@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.Objects.requireNonNull;
+
 public final class App {
 
     private static final Logger logger = LoggerFactory.getLogger(App.class);
@@ -34,12 +36,11 @@ public final class App {
             CassandraProperties cassandraProperties = null;
             try {
                 logger.info("Loading application properties");
-                final String path = App.class.getClassLoader().getResource("").getPath();
+                final String path = requireNonNull(App.class.getClassLoader().getResource("")).getPath();
                 applicationProperties = PropertyFileLoader.loadApplicationProperties(path + APPLICATION_PROPERTIES);
                 cassandraProperties = PropertyFileLoader.loadCassandraProperties(path + CASSANDRA_PROPERTIES);
             } catch (IOException e) {
                 logger.error("Cannot load application properties file!", e);
-                System.exit(-1);
             }
 
             connectorManager = new CassandraConnectorManager(new CassandraConnector(), cassandraProperties);
@@ -61,7 +62,6 @@ public final class App {
 
             } catch (final IOException e) {
                 logger.error("Cannot start reactor!", e);
-                System.exit(-1);
             }
         } finally {
             if (null != connectorManager) {
